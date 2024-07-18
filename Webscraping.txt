@@ -1,0 +1,65 @@
+from bs4 import BeautifulSoup
+import requests
+from csv import writer
+
+
+#url = "https://www.flipkart.com/search?q=laptop&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off&page={}".format(i)
+
+
+#url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p4432023.m570.l1313&_nkw=laptops&_sacat=0"
+
+urls = [
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=1',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=2',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=3',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=4',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=5',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=6',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=7',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=8',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=9',
+    'https://www.ebay.com/sch/i.html?_from=R40&_nkw=laptops&_sacat=0&_pgn=10',
+]
+
+page = requests.get(url)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+
+lists = soup.find_all('div', class_="s-item__info clearfix")
+
+with open(r'C:\Projects\BIA-main\laptop_ebay.csv', 'a', encoding='utf8', newline='') as f:
+    thewriter = writer(f)
+    for l in lists[2:]:
+        name = l.find('div', class_='s-item__title').text
+        price = l.find('div', class_='s-item__detail').text.replace('$','')
+
+        thewriter.writerow([name,price])
+
+**************************************************************************************************************************************************************************
+from bs4 import BeautifulSoup
+import requests
+from csv import writer
+
+
+#url = "https://www.flipkart.com/search?q=laptop&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off&page={}".format(i)
+
+
+url = "https://www.ebay.com/sch/i.html?_from=R40&_trksid=p4432023.m570.l1313&_nkw=laptops&_sacat=0"
+
+page = requests.get(url)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+
+lists = soup.find_all('div', class_="s-item__info clearfix")
+
+with open(r'C:\Projects\BIA-main\laptop_ebay.csv', 'a', encoding='utf8', newline='') as f:
+    thewriter = writer(f)
+    for l in lists[2:]:
+        name = l.find('div', class_='s-item__title').text
+        price = l.find('div', class_='s-item__detail').text.replace('$','')
+
+        thewriter.writerow([name,price])
+
+
+
+
